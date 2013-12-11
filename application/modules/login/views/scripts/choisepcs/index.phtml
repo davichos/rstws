@@ -1,0 +1,67 @@
+<script type="text/javascript">
+var init = function(){
+	dijit.byId('addRecordDialogLog').show();
+	var hidePreloader = function(){
+		// This really hides the preloader
+		var hide = function(){
+			dojo.fadeOut({
+					node:"preloader",
+					duration:700,
+					onEnd: function(){								
+						dojo.style("preloader", "display", "none");	
+					}
+			}).play();
+		};
+	
+		// Set a timeout to ensure the preloader is visible.
+		// This is only for testing !!!
+		setTimeout(hide, 5000);
+	}; 
+	
+	function showPreloader() {
+		// Show the preloader centered in the viewport		
+		var ps = dojo.position('preloaderContent');
+		var ws = dojo.window.getBox();
+		dojo.style("preloaderContent", "top" , (ws.h/2-ps.h/2)+"px");
+		dojo.style("preloaderContent", "left", (ws.w/2-ps.w/2)+"px");
+		dojo.style("preloaderContent", "visibility" , "visible");
+	};	
+	showPreloader();				
+	//dojo.parser.parse();
+ 	hidePreloader();       	
+}
+dojo.addOnLoad(init);
+</script>
+<style>
+<!--
+.dijitDialogCloseIcon{
+                                visibility:hidden;
+}
+#linklogout{
+font-size: 13px;
+color:#408080;	
+text-decoration: none;
+} 
+.alinder{
+text-align:right;
+font-weight:bold;
+padding: 0 70px 0 0;
+}
+
+-->
+</style>
+<?php 
+	$a='<div class="alinder"><a href="'.$this->url(
+    array(
+    	'module'	 => 'login',
+        'controller' => 'index',
+        'action'     => 'logout'
+    ),
+    'default',
+    true).'" title="Cerrar Sesison"><span id="linklogout">Cerrar Sesion</span></a></div>';
+    
+	echo $this->customDijit(
+		'addRecordDialogLog',
+		(string) $a.$this->formchoise,
+		array('dojoType'=>'dijit.Dialog', 'title'=>'Selecciona PCS')
+	);?>
